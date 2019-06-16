@@ -1,8 +1,10 @@
 <?php
 
 Route::name('api.')->namespace('Api')->group(function () {
-    Route::match(['get', 'post'], 'drivers', 'DriverController@store')->name('drivers.store');
     Route::middleware('token')->group(function () {
-        // access_token required
+        Route::prefix('fines')->name('fines')->group(function () {
+            Route::post('/', 'FineController@store')->name('store');
+            Route::patch('{id}', 'FineController@show')->name('show');
+        });
     });
 });
